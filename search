@@ -1,0 +1,32 @@
+	<select id="selectSearchPost" resultMap="BoardMap">
+		SELECT	@b_rownum := @b_rownum -1 AS b_rownum,
+				b_id,
+				b_title,
+				b_writer,
+				b_datetime,
+				b_view,
+				b_group,
+				b_order,
+				b_depth,
+				b_editid
+				
+		FROM		lc_board as ta, 
+					(SELECT @b_rownum := (SELECT COUNT(*)-#{pageNum}+1 FROM lc_board )) tb
+				
+		<where>
+			<if test="search.optionSelect == 'b_title'">
+				b_title like '%${search.searchText}%'
+			</if>
+			<if test="search.optionSelect == 'b_content'">
+				b_title like '%${search.searchText}%'
+				OR b_content like '%${search.searchText}%'
+			</if>
+			<if test="search.optionSelect == 'b_writer'">
+				b_writer like '%${search.searchText}%'
+			</if>
+		</where>
+				
+		ORDER BY	b_group desc, b_order asc
+		
+		LIMIT		#{pageNum}, 5
+	</select>
