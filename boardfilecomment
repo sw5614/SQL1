@@ -1,0 +1,19 @@
+SELECT       ta.b_id					 ,
+ 	  			   b_title				,
+ 				   b_content	  		,
+ 				   b_writer				,
+ 				   b_datetime 			,
+ 				   b_group				,
+ 				   b_order				,
+ 				   b_depth			,
+ 				   tb.t_upload ,
+ 				   tb.t_fileName,
+					tc.c_writer,
+					tc.c_content,
+					tc.c_datetime	
+      FROM         lc_board ta
+      LEFT JOIN  lc_upload tb
+      ON 		ta.b_id=tb.b_idx
+		LEFT JOIN lc_comment tc 
+		ON			ta.b_id=tc.b_id	
+      WHERE        ta.b_id='187'
